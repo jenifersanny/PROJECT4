@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - YUFUNANEC PNG Heritage Garments Store</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-page="home">
+    <div id="alertContainer"></div>
+    
+    <header class="header">
+        <div class="nav-container">
+            <a href="/home.html" class="logo">YUFUNANEC</a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/home.html">Home</a></li>
+                    <li><a href="/shop.html">Shop</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <span id="userInfo"></span>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+                <a href="/cart.html" class="cart-icon">
+                    🛒
+                    <span id="cartCount" class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Welcome to PNG Heritage</h1>
+            <p>Discover authentic traditional garments that celebrate our rich cultural heritage</p>
+            <a href="/shop.html" class="btn btn-primary">Shop Now</a>
+        </section>
+
+        <div class="container">
+            <!-- Featured Products -->
+            <section class="featured-section">
+                <h2>Featured Products</h2>
+                <div id="featuredProducts" class="product-grid">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cultural Story -->
+            <section class="cultural-story">
+                <h2>Our Cultural Heritage</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin: 2rem 0;">
+                    <div>
+                        <h3>Traditional Kolos</h3>
+                        <p>The Kolo is a traditional male garment worn during cultural ceremonies and special occasions. Each Kolo is handwoven using traditional techniques passed down through generations, featuring intricate patterns that tell stories of our ancestors.</p>
+                        
+                        <h3>Meri Blouses</h3>
+                        <p>Our Meri blouses represent the elegance and grace of PNG women. These beautiful garments are crafted with attention to detail, incorporating traditional designs that have been cherished for centuries.</p>
+                    </div>
+                    <div>
+                        <img src="/images/culturalheritage.jpg" alt="PNG Cultural Heritage" style="width: 100%; border-radius: 10px;">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Preview -->
+            <section class="categories-preview">
+                <h2>Shop by Category</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <img src="/images/TraditionalKolos.jpg" alt="Traditional Kolos" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title">Traditional Kolos</h3>
+                            <p class="product-description">Authentic handwoven male traditional garments</p>
+                            <a href="/shop.html?category=1" class="btn btn-primary">Browse Kolos</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="/images/MeriBlouses.jpg" alt="Meri Blouses" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title">Meri Blouses</h3>
+                            <p class="product-description">Beautiful traditional women's blouses</p>
+                            <a href="/shop.html?category=2" class="btn btn-primary">Browse Blouses</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <img src="/images/photo1756746057.jpg" alt="Accessories" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title">Accessories</h3>
+                            <p class="product-description">Traditional PNG accessories and ornaments</p>
+                            <a href="/shop.html?category=3" class="btn btn-primary">Browse Accessories</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Newsletter Signup -->
+            <section class="newsletter">
+                <div style="background: white; padding: 3rem; border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <h2>Stay Connected</h2>
+                    <p>Subscribe to our newsletter for updates on new arrivals and cultural stories</p>
+                    <form style="display: flex; gap: 1rem; max-width: 400px; margin: 0 auto;">
+                        <input type="email" placeholder="Enter your email" class="form-control" style="flex: 1;">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>YUFUNANEC</h3>
+                <p>Preserving PNG heritage through authentic traditional garments.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="/shop.html">Shop</a>
+                <a href="/about.html">About Us</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <a href="/shipping.html">Shipping Info</a>
+                <a href="/returns.html">Returns</a>
+                <a href="/faq.html">FAQ</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 YUFUNANEC PNG Heritage Garments Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>

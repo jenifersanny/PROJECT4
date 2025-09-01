@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - YUFUNANEC PNG Heritage Garments Store</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-page="product">
+    <div id="alertContainer"></div>
+    
+    <header class="header">
+        <div class="nav-container">
+            <a href="/home.html" class="logo">YUFUNANEC</a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/home.html">Home</a></li>
+                    <li><a href="/shop.html">Shop</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <span id="userInfo"></span>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+                <a href="/cart.html" class="cart-icon">
+                    🛒
+                    <span id="cartCount" class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <nav style="margin-bottom: 2rem;">
+            <a href="/shop.html" style="color: var(--accent-gold); text-decoration: none;">← Back to Shop</a>
+        </nav>
+
+        <div id="productContent">
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+        </div>
+
+        <div id="productDetail" style="display: none;">
+            <div class="product-detail">
+                <!-- Product Gallery -->
+                <div class="product-gallery">
+                    <img id="mainImage" src="" alt="" class="main-image">
+                    <div id="thumbnailImages" class="thumbnail-images"></div>
+                </div>
+
+                <!-- Product Information -->
+                <div class="product-details">
+                    <h1 id="productName"></h1>
+                    <div id="productPrice" class="product-price-large"></div>
+                    <div id="productDescription" style="margin: 2rem 0; line-height: 1.8;"></div>
+                    
+                    <!-- Product Options -->
+                    <div class="product-options">
+                        <div id="sizeOptions" class="option-group" style="display: none;">
+                            <h4>Size:</h4>
+                            <div class="option-buttons" id="sizeButtons"></div>
+                        </div>
+                        
+                        <div id="colorOptions" class="option-group" style="display: none;">
+                            <h4>Color:</h4>
+                            <div class="option-buttons" id="colorButtons"></div>
+                        </div>
+                        
+                        <div class="option-group">
+                            <h4>Quantity:</h4>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="productPage.changeQuantity(-1)">-</button>
+                                <input type="number" id="quantityInput" value="1" min="1" class="quantity-input">
+                                <button class="quantity-btn" onclick="productPage.changeQuantity(1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stock Status -->
+                    <div id="stockStatus" style="margin: 1rem 0;"></div>
+
+                    <!-- Add to Cart Button -->
+                    <button id="addToCartBtn" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem; margin-bottom: 1rem;">
+                        Add to Cart
+                    </button>
+
+                    <!-- Product Info -->
+                    <div style="background: var(--cream); padding: 1.5rem; border-radius: 10px; margin-top: 2rem;">
+                        <h4>Product Information</h4>
+                        <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                            <li>Authentic PNG traditional garment</li>
+                            <li>Handcrafted with traditional techniques</li>
+                            <li>High-quality materials</li>
+                            <li>Cultural heritage preservation</li>
+                            <li>Free shipping on all orders</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <section style="margin-top: 4rem;">
+                <h2>Related Products</h2>
+                <div id="relatedProducts" class="product-grid"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>YUFUNANEC</h3>
+                <p>Preserving PNG heritage through authentic traditional garments.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="/shop.html">Shop</a>
+                <a href="/about.html">About Us</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <a href="/shipping.html">Shipping Info</a>
+                <a href="/returns.html">Returns</a>
+                <a href="/faq.html">FAQ</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 YUFUNANEC PNG Heritage Garments Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+        class ProductPage {
+            constructor() {
+                this.product = null;
+                this.selectedSize = null;
+                this.selectedColor = null;
+                this.quantity = 1;
+                this.init();
+            }
+
+            async init() {
+                const productId = this.getProductIdFromUrl();
+                if (productId) {
+                    await this.loadProduct(productId);
+                } else {
+                    window.location.href = '/shop.html';
+                }
+                this.setupEventListeners();
+            }
+
+            getProductIdFromUrl() {
+                const params = new URLSearchParams(window.location.search);
+                return params.get('id');
+            }
+
+            async loadProduct(productId) {
+                try {
+                    const product = await marketplace.getProduct(productId);
+                    if (product) {
+                        this.product = product;
+                        this.renderProduct(product);
+                        await this.loadRelatedProducts(product.category_id);
+                    } else {
+                        marketplace.showAlert('Product not found', 'error');
+                        window.location.href = '/shop.html';
+                    }
+                } catch (error) {
+                    marketplace.showAlert('Failed to load product', 'error');
+                    window.location.href = '/shop.html';
+                }
+            }
+
+            renderProduct(product) {
+                document.getElementById('productContent').style.display = 'none';
+                document.getElementById('productDetail').style.display = 'block';
+
+                // Update page title
+                document.title = `${product.name} - YUFUNANEC PNG Heritage Garments Store`;
+
+                // Product name and price
+                document.getElementById('productName').textContent = product.name;
+                document.getElementById('productPrice').textContent = `$${parseFloat(product.price).toFixed(2)}`;
+                document.getElementById('productDescription').textContent = product.description;
+
+                // Main image
+                const mainImage = document.getElementById('mainImage');
+                mainImage.src = product.image_url || '/assets/images/placeholder.jpg';
+                mainImage.alt = product.name;
+
+                // Gallery images
+                this.renderGallery(product);
+
+                // Size options
+                if (product.sizes && product.sizes.length > 0) {
+                    this.renderSizeOptions(product.sizes);
+                }
+
+                // Color options
+                if (product.colors && product.colors.length > 0) {
+                    this.renderColorOptions(product.colors);
+                }
+
+                // Stock status
+                this.renderStockStatus(product.stock_quantity);
+            }
+
+            renderGallery(product) {
+                const thumbnailContainer = document.getElementById('thumbnailImages');
+                const images = [product.image_url, ...(product.gallery_images || [])];
+                
+                thumbnailContainer.innerHTML = images.map((img, index) => 
+                    `<img src="${img || '/assets/images/placeholder.jpg'}" 
+                          alt="${product.name}" 
+                          class="thumbnail ${index === 0 ? 'active' : ''}"
+                          onclick="productPage.changeMainImage('${img}', this)">`
+                ).join('');
+            }
+
+            renderSizeOptions(sizes) {
+                const sizeOptions = document.getElementById('sizeOptions');
+                const sizeButtons = document.getElementById('sizeButtons');
+                
+                sizeOptions.style.display = 'block';
+                sizeButtons.innerHTML = sizes.map(size => 
+                    `<button class="option-btn" onclick="productPage.selectSize('${size}')">${size}</button>`
+                ).join('');
+            }
+
+            renderColorOptions(colors) {
+                const colorOptions = document.getElementById('colorOptions');
+                const colorButtons = document.getElementById('colorButtons');
+                
+                colorOptions.style.display = 'block';
+                colorButtons.innerHTML = colors.map(color => 
+                    `<button class="option-btn" onclick="productPage.selectColor('${color}')">${color}</button>`
+                ).join('');
+            }
+
+            renderStockStatus(stock) {
+                const stockStatus = document.getElementById('stockStatus');
+                if (stock > 0) {
+                    stockStatus.innerHTML = `<span style="color: var(--success-green);">✓ In Stock (${stock} available)</span>`;
+                } else {
+                    stockStatus.innerHTML = `<span style="color: var(--error-red);">✗ Out of Stock</span>`;
+                    document.getElementById('addToCartBtn').disabled = true;
+                    document.getElementById('addToCartBtn').textContent = 'Out of Stock';
+                }
+            }
+
+            changeMainImage(src, thumbnail) {
+                document.getElementById('mainImage').src = src;
+                document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+                thumbnail.classList.add('active');
+            }
+
+            selectSize(size) {
+                this.selectedSize = size;
+                document.querySelectorAll('#sizeButtons .option-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent === size) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            selectColor(color) {
+                this.selectedColor = color;
+                document.querySelectorAll('#colorButtons .option-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent === color) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            changeQuantity(delta) {
+                const input = document.getElementById('quantityInput');
+                const newValue = parseInt(input.value) + delta;
+                if (newValue >= 1 && newValue <= this.product.stock_quantity) {
+                    input.value = newValue;
+                    this.quantity = newValue;
+                }
+            }
+
+            async addToCart() {
+                if (!this.product) return;
+
+                const quantity = parseInt(document.getElementById('quantityInput').value);
+                const success = await marketplace.addToCart(
+                    this.product.id, 
+                    quantity, 
+                    this.selectedSize, 
+                    this.selectedColor
+                );
+
+                if (success) {
+                    // Show success animation or modal
+                    const btn = document.getElementById('addToCartBtn');
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Added to Cart!';
+                    btn.style.background = 'var(--success-green)';
+                    
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '';
+                    }, 2000);
+                }
+            }
+
+            async loadRelatedProducts(categoryId) {
+                if (!categoryId) return;
+                
+                try {
+                    const products = await marketplace.getProducts({ category_id: categoryId });
+                    const relatedProducts = products.filter(p => p.id != this.product.id).slice(0, 4);
+                    
+                    const container = document.getElementById('relatedProducts');
+                    container.innerHTML = relatedProducts.map(product => 
+                        marketplace.renderProductCard(product)
+                    ).join('');
+                } catch (error) {
+                    console.error('Failed to load related products:', error);
+                }
+            }
+
+            setupEventListeners() {
+                const addToCartBtn = document.getElementById('addToCartBtn');
+                if (addToCartBtn) {
+                    addToCartBtn.addEventListener('click', () => this.addToCart());
+                }
+
+                const quantityInput = document.getElementById('quantityInput');
+                if (quantityInput) {
+                    quantityInput.addEventListener('change', (e) => {
+                        this.quantity = parseInt(e.target.value);
+                    });
+                }
+            }
+        }
+
+        // Initialize product page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.productPage = new ProductPage();
+        });
+    </script>
+</body>
+</html>

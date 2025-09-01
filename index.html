@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUFUNANEC PNG Heritage Garments Store</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-page="landing">
+    <div id="alertContainer"></div>
+    
+    <header class="header">
+        <div class="nav-container">
+            <a href="/" class="logo">YUFUNANEC</a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/shop.html">Shop</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button id="loginBtn" class="btn btn-primary">Login</button>
+                <button id="logoutBtn" class="btn btn-secondary" style="display: none;">Logout</button>
+                <span id="userInfo" style="display: none;"></span>
+                <a href="/cart.html" class="cart-icon">
+                    🛒
+                    <span id="cartCount" class="cart-count" style="display: none;">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="hero">
+            <h1>Authentic PNG Heritage Garments</h1>
+            <p>Discover the rich cultural heritage of Papua New Guinea through our collection of traditional garments, handcrafted with love and respect for our ancestors.</p>
+            <div id="authSection">
+                <div class="auth-container">
+                    <div class="auth-header">
+                        <h1 id="authTitle">Welcome Back</h1>
+                        <p>Please sign in to continue shopping</p>
+                    </div>
+                    
+                    <!-- Login Form -->
+                    <form id="loginForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="loginUsername">Username or Email</label>
+                            <input type="text" id="loginUsername" name="username" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+                    </form>
+                    
+                    <!-- Register Form -->
+                    <form id="registerForm" class="auth-form" style="display: none;">
+                        <div class="form-group">
+                            <label for="registerFullName">Full Name</label>
+                            <input type="text" id="registerFullName" name="full_name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerUsername">Username</label>
+                            <input type="text" id="registerUsername" name="username" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" name="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" name="password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                    </form>
+                    
+                    <div class="auth-toggle">
+                        <p id="authToggleText">Don't have an account? <a href="#" id="authToggleLink">Sign up here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cultural Story Section -->
+        <section class="cultural-story">
+            <div class="container">
+                <h2>Our Heritage</h2>
+                <p>Papua New Guinea's traditional clothing represents centuries of cultural heritage. Each garment tells a story of our ancestors, their beliefs, and their connection to the land. Our Kolos and Meri blouses are not just clothing - they are living pieces of history that connect us to our roots.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>YUFUNANEC</h3>
+                <p>Preserving PNG heritage through authentic traditional garments.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="/shop.html">Shop</a>
+                <a href="/about.html">About Us</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <a href="/shipping.html">Shipping Info</a>
+                <a href="/returns.html">Returns</a>
+                <a href="/faq.html">FAQ</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 YUFUNANEC PNG Heritage Garments Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+        // Toggle between login and register forms
+        document.addEventListener('DOMContentLoaded', function() {
+            const authToggleLink = document.getElementById('authToggleLink');
+            const authTitle = document.getElementById('authTitle');
+            const authToggleText = document.getElementById('authToggleText');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            let isLoginMode = true;
+
+            authToggleLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                isLoginMode = !isLoginMode;
+                
+                if (isLoginMode) {
+                    authTitle.textContent = 'Welcome Back';
+                    authToggleText.innerHTML = 'Don\'t have an account? <a href="#" id="authToggleLink">Sign up here</a>';
+                    loginForm.style.display = 'block';
+                    registerForm.style.display = 'none';
+                } else {
+                    authTitle.textContent = 'Create Account';
+                    authToggleText.innerHTML = 'Already have an account? <a href="#" id="authToggleLink">Sign in here</a>';
+                    loginForm.style.display = 'none';
+                    registerForm.style.display = 'block';
+                }
+                
+                // Re-attach event listener to new link
+                document.getElementById('authToggleLink').addEventListener('click', arguments.callee);
+            });
+        });
+    </script>
+</body>
+</html>

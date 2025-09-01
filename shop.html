@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - YUFUNANEC PNG Heritage Garments Store</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-page="shop">
+    <div id="alertContainer"></div>
+    
+    <header class="header">
+        <div class="nav-container">
+            <a href="/home.html" class="logo">YUFUNANEC</a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/home.html">Home</a></li>
+                    <li><a href="/shop.html">Shop</a></li>
+                    <li><a href="/about.html">About</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <form id="searchForm" style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="searchInput" placeholder="Search products..." class="form-control" style="width: 200px;">
+                    <button type="submit" class="btn btn-secondary">Search</button>
+                </form>
+                <span id="userInfo"></span>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+                <a href="/cart.html" class="cart-icon">
+                    🛒
+                    <span id="cartCount" class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="margin-bottom: 2rem;">
+            <h1>Traditional PNG Garments</h1>
+            <p>Discover our complete collection of authentic PNG traditional wear, from classic Meri blouses to handwoven Kolos.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem;">
+            <!-- Sidebar Filters -->
+            <aside>
+                <div style="background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <h3>Filter by Category</h3>
+                    <div id="categoriesFilter" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div>
+                <!-- Controls Bar -->
+                <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 2rem; background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <span id="productCount">Loading products...</span>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <label for="sortSelect">Sort by:</label>
+                        <select id="sortSelect" class="form-select" style="width: auto;">
+                            <option value="newest">Newest First</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name">Name A-Z</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div id="productsGrid" class="product-grid">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>YUFUNANEC</h3>
+                <p>Preserving PNG heritage through authentic traditional garments.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="/shop.html">Shop</a>
+                <a href="/about.html">About Us</a>
+                <a href="/contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <a href="/shipping.html">Shipping Info</a>
+                <a href="/returns.html">Returns</a>
+                <a href="/faq.html">FAQ</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 YUFUNANEC PNG Heritage Garments Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+    <script>
+        // Additional shop-specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sortSelect = document.getElementById('sortSelect');
+            if (sortSelect) {
+                sortSelect.addEventListener('change', function() {
+                    // This will be handled by the main marketplace class
+                    const currentFilters = marketplace.getCurrentFilters?.() || {};
+                    currentFilters.sort = this.value;
+                    marketplace.loadProducts(currentFilters);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
